@@ -10,8 +10,8 @@ def index():
 
 @app.route('/game')
 def game():
-    row_num = int(request.args.get('row-num', 10))
-    col_num = int(request.args.get('col-num', 20))
+    row_num = 10
+    col_num = 20
     return render_template('game.html', row_num=row_num, col_num=col_num)
 
 
