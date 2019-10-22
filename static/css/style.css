@@ -16,3 +16,15 @@ body {
     color: grey;
     vertical-align: middle;
 }
+
+.player1-cell {
+    background-color: blue;
+}
+
+.player2-cell {
+    background-color: red;
+}
+
+.empty-cell {
+    background-color: transparent;
+}
