@@ -88,9 +88,11 @@ function getNeighbourCount(x,y, gameState){
 
 
 function switchPlayer(click) {
-    if (click < 5) {
+    const firstRoundMarkedCellByOnePlayer = 4;
+    let firstRoundMarkedCellByBothPlayer = firstRoundMarkedCellByOnePlayer * 2;
+    if (click <= firstRoundMarkedCellByOnePlayer) {
         currentPlayer = 1;
-    } else if (5 <= click && click <9) {
+    } else if (firstRoundMarkedCellByOnePlayer < click && click <= firstRoundMarkedCellByBothPlayer) {
         currentPlayer = 2;
     } else if (click % 2 !== 0) {
         currentPlayer = 1;
@@ -102,14 +104,15 @@ function markCell() {
     let gameCell = document.querySelectorAll('.game-cell');
     for (cell of gameCell) {
         cell.addEventListener('click', function (event) {
+            const firstRoundMarkedCells = 8;
             click += 1;
             console.log(`Click ${click}`);
 
             switchPlayer(click);
             console.log(`Player: ${currentPlayer}`);
 
-            currentRound = (click <= 8 ? 1 : (click % 2 === 0 ? currentRound : currentRound + 1));
-            previousRound = (click < 8 ? 1 : (click % 2 === 0 ? currentRound - 1 : currentRound ));
+            currentRound = (click <= firstRoundMarkedCells ? 1 : (click % 2 === 0 ? currentRound : currentRound + 1));
+            previousRound = (click < firstRoundMarkedCells ? 1 : (click % 2 === 0 ? currentRound - 1 : currentRound ));
             console.log(`Previous round: ${previousRound}`);
             console.log(`Current round ${currentRound}`);
 
