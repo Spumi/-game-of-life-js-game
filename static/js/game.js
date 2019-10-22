@@ -87,19 +87,35 @@ function getNeighbourCount(x,y, gameState){
 }
 
 
+function switchPlayer(click) {
+    if (click < 5) {
+        currentPlayer = 1;
+    } else if (5 <= click && click <9) {
+        currentPlayer = 2;
+    } else if (click % 2 !== 0) {
+        currentPlayer = 1;
+    } else {currentPlayer = 2;}
+}
+
+
 function markCell() {
     let gameCell = document.querySelectorAll('.game-cell');
     for (cell of gameCell) {
         cell.addEventListener('click', function (event) {
+            console.log(click);
+            switchPlayer(click);
             let markedCell = event.target;
             let markedCellCoordinateX = markedCell.dataset.coordinateX;
             let markedCellCoordinateY = markedCell.dataset.coordinateY;
+
+
             gameState[markedCellCoordinateX][markedCellCoordinateY].player = currentPlayer;
             drawDisplay(gameState);
+            click += 1;
         })
     }
 }
 
-
+let click = 1;
 gameState = initGameState();
 markCell();
