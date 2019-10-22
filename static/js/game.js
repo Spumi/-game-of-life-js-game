@@ -98,12 +98,26 @@ function switchPlayer(click) {
 }
 
 
+function nextRound(click) {
+    if (click === 5 || click === 9) {
+        currentRound += 1;
+    } else if (9 <= click) {
+        currentRound += 1;
+    }
+    return currentRound;
+}
+
+
+
 function markCell() {
     let gameCell = document.querySelectorAll('.game-cell');
     for (cell of gameCell) {
         cell.addEventListener('click', function (event) {
-            console.log(click);
+            click += 1;
+            console.log(`Click ${click}`);
             switchPlayer(click);
+            currentRound = nextRound(click);
+            console.log(`Round ${currentRound}`);
             let markedCell = event.target;
             let markedCellCoordinateX = markedCell.dataset.coordinateX;
             let markedCellCoordinateY = markedCell.dataset.coordinateY;
@@ -111,11 +125,11 @@ function markCell() {
 
             gameState[markedCellCoordinateX][markedCellCoordinateY].player = currentPlayer;
             drawDisplay(gameState);
-            click += 1;
         })
     }
 }
 
-let click = 1;
+let currentRound = 1;
+let click = 0;
 gameState = initGameState();
 markCell();
