@@ -98,17 +98,6 @@ function switchPlayer(click) {
 }
 
 
-function getCurrentRound(click) {
-    if (click === 5 || click === 9) {
-        currentRound += 1;
-    } else if (9 <= click) {
-        currentRound += 1;
-    }
-    return currentRound;
-}
-
-
-
 function markCell() {
     let gameCell = document.querySelectorAll('.game-cell');
     for (cell of gameCell) {
@@ -119,8 +108,8 @@ function markCell() {
             switchPlayer(click);
             console.log(`Player: ${currentPlayer}`);
 
-            currentRound = getCurrentRound(click);
-            previousRound = currentRound - 1;
+            currentRound = (click <= 8 ? 1 : (click % 2 === 0 ? currentRound : currentRound + 1));
+            previousRound = (click < 8 ? 1 : (click % 2 === 0 ? currentRound - 1 : currentRound ));
             console.log(`Previous round: ${previousRound}`);
             console.log(`Current round ${currentRound}`);
 
