@@ -1,3 +1,12 @@
+let gameState = [];
+
+class Cell {
+    constructor(player, status) {
+    this.player = player;
+    this.status = status;
+  }
+}
+
 
 function drawDisplay(object) {
     let colNumber = object.length;
@@ -25,14 +34,6 @@ function drawDisplay(object) {
     }
 }
 
-let gameState = [];
-
-class Cell {
-    constructor(player, status) {
-    this.player = player;
-    this.status = status;
-  }
-}
 
 function initGameState(){
     board = document.getElementById("game-board");
@@ -85,7 +86,19 @@ function getNeighbourCount(x,y, gameState){
 }
 
 
+function markCell() {
+    let gameCell = document.querySelectorAll('.game-cell');
+    for (cell of gameCell) {
+        cell.addEventListener('click', function (event) {
+            let markedCell = event.target;
+            let markedCellCoordinateX = markedCell.dataset.coordinateX;
+            let markedCellCoordinateY = markedCell.dataset.coordinateY;
+            gameState[markedCellCoordinateX][markedCellCoordinateY].player = player;
+            drawDisplay(gameState);
+        })
+    }
+}
 
 
 gameState = initGameState();
-
+markCell(gameState);
