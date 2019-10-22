@@ -1,4 +1,5 @@
 let gameState = [];
+let player = 1;
 
 class Cell {
     constructor(player, status) {
