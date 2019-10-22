@@ -24,3 +24,19 @@ function initGameState(){
 }
 
 gameState = initGameState();
+
+
+
+function markCell(gameState, player) {
+    let gameCell = document.querySelectorAll('.game-cell');
+    for (cell of gameCell) {
+        cell.addEventListener('click', function (event) {
+            let markedCell = event.target;
+            let markedCellCoordinateX = markedCell.dataset.coordinateX;
+            let markedCellCoordinateY = markedCell.dataset.coordinateY;
+            gameState[markedCellCoordinateX][markedCellCoordinateY].player = player;
+        })
+    }
+}
+
+markCell(gameState, 1);
