@@ -1,5 +1,5 @@
 let gameState = [];
-let player = 1;
+let currentPlayer = 1;
 
 class Cell {
     constructor(player, status) {
@@ -94,7 +94,7 @@ function markCell() {
             let markedCell = event.target;
             let markedCellCoordinateX = markedCell.dataset.coordinateX;
             let markedCellCoordinateY = markedCell.dataset.coordinateY;
-            gameState[markedCellCoordinateX][markedCellCoordinateY].player = player;
+            gameState[markedCellCoordinateX][markedCellCoordinateY].player = currentPlayer;
             drawDisplay(gameState);
         })
     }
@@ -102,4 +102,4 @@ function markCell() {
 
 
 gameState = initGameState();
-markCell(gameState);
+markCell();
