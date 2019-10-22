@@ -105,17 +105,6 @@ function markCell() {
     for (cell of gameCell) {
         cell.addEventListener('click', function (event) {
             const firstRoundMarkedCells = 8;
-            click += 1;
-            console.log(`Click ${click}`);
-
-            switchPlayer(click);
-            console.log(`Player: ${currentPlayer}`);
-
-            currentRound = (click <= firstRoundMarkedCells ? 1 : (click % 2 === 0 ? currentRound : currentRound + 1));
-            previousRound = (click < firstRoundMarkedCells ? 1 : (click % 2 === 0 ? currentRound - 1 : currentRound ));
-            console.log(`Previous round: ${previousRound}`);
-            console.log(`Current round ${currentRound}`);
-
             let markedCell = event.target;
 
             let markedCellCoordinateX = markedCell.dataset.coordinateX;
@@ -123,13 +112,27 @@ function markCell() {
             console.log(`Coord-X: ${markedCellCoordinateX}`);
             console.log(`Coord-Y: ${markedCellCoordinateY}`);
 
-            gameState[markedCellCoordinateX][markedCellCoordinateY].player = currentPlayer;
-            console.log(gameState);
-            drawDisplay(gameState);
-            if (previousRound < currentRound) {
-                // ROUND EVALUATION FUNCTION NEEDED BELOW
-                console.log('ROUND EVALUATION FUNCTION');
+            if (gameState[markedCellCoordinateX][markedCellCoordinateY].player === 0) {
+                click += 1;
+                console.log(`Click ${click}`);
+
+                switchPlayer(click);
+                console.log(`Player: ${currentPlayer}`);
+
+                currentRound = (click <= firstRoundMarkedCells ? 1 : (click % 2 === 0 ? currentRound : currentRound + 1));
+                previousRound = (click < firstRoundMarkedCells ? 1 : (click % 2 === 0 ? currentRound - 1 : currentRound));
+                console.log(`Previous round: ${previousRound}`);
+                console.log(`Current round ${currentRound}`);
+
+
+                gameState[markedCellCoordinateX][markedCellCoordinateY].player = currentPlayer;
+                console.log(gameState);
                 drawDisplay(gameState);
+                if (previousRound < currentRound) {
+                    // ROUND EVALUATION FUNCTION NEEDED BELOW
+                    console.log('ROUND EVALUATION FUNCTION');
+                    drawDisplay(gameState);
+                }
             }
         })
     }
