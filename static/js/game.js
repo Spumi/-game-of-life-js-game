@@ -10,13 +10,12 @@ class Cell {
 
 function initGameState(){
     board = document.getElementById("game-board");
-    width = board.dataset.rowNum;
-    height = board.dataset.colNum;
-    console.log(height);
-    let state = [height];
-    for (let x = 0; x < height; x++){
+    width = board.dataset.colNum;
+    height = board.dataset.rowNum;
+    let state = [width];
+    for (let x = 0; x < width; x++){
         state[x] =new Array(height);
-        for (let y =0; y < width; y++){
+        for (let y =0; y < height; y++){
             state[x][y] = new Cell(x, y);
         }
 
