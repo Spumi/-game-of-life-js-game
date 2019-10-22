@@ -16,7 +16,7 @@ function initGameState(){
     for (let x = 0; x < width; x++){
         state[x] =new Array(height);
         for (let y =0; y < height; y++){
-            state[x][y] = new Cell(x, y);
+            state[x][y] = new Cell(0, "none");
         }
 
     }
