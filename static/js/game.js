@@ -20,7 +20,26 @@ function initGameState(){
         }
 
     }
+    initStartLocations(state);
     return state;
+}
+
+function initStartLocations(gameState){
+    let p1X = Math.round(width / 4);
+    let p2X = p1X * 3;
+    let y = Math.round(height /2);
+    gameState[p1X][y].player = 1;
+    gameState[p1X][y].status = "alive";
+    gameState[p2X][y].player = 2;
+    gameState[p2X][y].status = "alive";
+
+     for (let y = 0; y < height; y++) {
+         let str = "";
+         for (let x = 0; x < width; x++) {
+            str += gameState[x][y].player + ", ";
+         }
+         console.log("|" + str + y.toString())
+     }
 }
 
 gameState = initGameState();
