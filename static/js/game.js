@@ -98,7 +98,7 @@ function switchPlayer(click) {
 }
 
 
-function nextRound(click) {
+function getCurrentRound(click) {
     if (click === 5 || click === 9) {
         currentRound += 1;
     } else if (9 <= click) {
@@ -115,20 +115,35 @@ function markCell() {
         cell.addEventListener('click', function (event) {
             click += 1;
             console.log(`Click ${click}`);
+
             switchPlayer(click);
-            currentRound = nextRound(click);
-            console.log(`Round ${currentRound}`);
+            console.log(`Player: ${currentPlayer}`);
+
+            currentRound = getCurrentRound(click);
+            previousRound = currentRound - 1;
+            console.log(`Previous round: ${previousRound}`);
+            console.log(`Current round ${currentRound}`);
+
             let markedCell = event.target;
+
             let markedCellCoordinateX = markedCell.dataset.coordinateX;
             let markedCellCoordinateY = markedCell.dataset.coordinateY;
-
+            console.log(`Coord-X: ${markedCellCoordinateX}`);
+            console.log(`Coord-Y: ${markedCellCoordinateY}`);
 
             gameState[markedCellCoordinateX][markedCellCoordinateY].player = currentPlayer;
+            console.log(gameState);
             drawDisplay(gameState);
+            if (previousRound < currentRound) {
+                // ROUND EVALUATION FUNCTION NEEDED BELOW
+                console.log('ROUND EVALUATION FUNCTION');
+                drawDisplay(gameState);
+            }
         })
     }
 }
 
+let previousRound = 1;
 let currentRound = 1;
 let click = 0;
 gameState = initGameState();
