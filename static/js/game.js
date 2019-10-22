@@ -46,6 +46,7 @@ function initGameState(){
         }
     }
     initStartLocations(state);
+    drawDisplay(state);
     return state;
 }
 
@@ -87,3 +88,4 @@ function getNeighbourCount(x,y, gameState){
 
 
 gameState = initGameState();
+
