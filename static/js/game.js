@@ -90,11 +90,11 @@ function getNeighbourCount(x,y, gameState){
 function switchPlayer(click) {
     const firstRoundMarkedCellByOnePlayer = 4;
     let firstRoundMarkedCellByBothPlayer = firstRoundMarkedCellByOnePlayer * 2;
-    if (click <= firstRoundMarkedCellByOnePlayer) {
+    if (click < firstRoundMarkedCellByOnePlayer) {
         currentPlayer = 1;
-    } else if (firstRoundMarkedCellByOnePlayer < click && click <= firstRoundMarkedCellByBothPlayer) {
+    } else if (firstRoundMarkedCellByOnePlayer <= click && click < firstRoundMarkedCellByBothPlayer) {
         currentPlayer = 2;
-    } else if (click % 2 !== 0) {
+    } else if (click % 2 === 0) {
         currentPlayer = 1;
     } else {currentPlayer = 2;}
 }
@@ -112,14 +112,11 @@ function markCell() {
             console.log(`Coord-X: ${markedCellCoordinateX}`);
             console.log(`Coord-Y: ${markedCellCoordinateY}`);
 
-            if (gameState[markedCellCoordinateX][markedCellCoordinateY].player === 0 //&&
-                //validateClick(currentPlayer, gameState, markedCellCoordinateX, markedCellCoordinateY)
+            if (gameState[markedCellCoordinateX][markedCellCoordinateY].player === 0 &&
+                validateClick(currentPlayer, gameState, markedCellCoordinateX, markedCellCoordinateY)
             ) {
                 click += 1;
                 console.log(`Click ${click}`);
-
-                switchPlayer(click);
-                console.log(`Player: ${currentPlayer}`);
 
                 currentRound = (click <= firstRoundMarkedCells ? 1 : (click % 2 === 0 ? currentRound : currentRound + 1));
                 previousRound = (click < firstRoundMarkedCells ? 1 : (click % 2 === 0 ? currentRound - 1 : currentRound));
@@ -130,11 +127,16 @@ function markCell() {
                 gameState[markedCellCoordinateX][markedCellCoordinateY].player = currentPlayer;
                 console.log(gameState);
                 drawDisplay(gameState);
+
                 if (previousRound < currentRound) {
                     // ROUND EVALUATION FUNCTION NEEDED BELOW
                     console.log('ROUND EVALUATION FUNCTION');
                     drawDisplay(gameState);
                 }
+
+                switchPlayer(click);
+                console.log(`Player: ${currentPlayer}`);
+
             }
         })
     }
