@@ -8,8 +8,6 @@ class Cell {
     }
 }
 
-function initGameState() {
-
 function drawDisplay(object) {
     let colNumber = object.length;
     let rowNumber = object[0].length;
@@ -67,7 +65,7 @@ function initStartLocations(gameState){
          for (let x = 0; x < width; x++) {
             str += gameState[x][y].player + ", ";
          }
-         console.log("|" + str + y.toString())
+         // console.log("|" + str + y.toString())
      }
 }
 
@@ -100,28 +98,96 @@ function markCell() {
         })
     }
 }
+
 function getNeighbours(x, y, gameState) {
     let neighbours = [];
-    for (let xOffset = -1; xOffset <= 1; xOffset++) {
-        for (let yOffset = -1; yOffset <= 1; yOffset++) {
-            if (xOffset != 0 &&
-                yOffset != 0 &&
-                x + xOffset > 0 &&
-                y + yOffset > 0 &&
-                gameState[x + xOffset][y + yOffset]
-            ) {
-                neighbours.push(gameState[x + xOffset] [y + yOffset]);
+    let offset = -1;
+    for (let xOffset = 0; xOffset < 3; xOffset++) {
+        for (let yOffset = 0; yOffset < 3; yOffset++) {
+            if (xOffset + offset + x >= 0 &&
+                yOffset + offset + y >= 0 &&
+                !(xOffset + offset == x && yOffset + offset == y) &&
+                gameState[x + xOffset -1][y + yOffset - 1].player != 0)
+            {
+                neighbours.push(gameState[x + xOffset - 1] [y + yOffset -1 ]);
             }
         }
     }
-    console.log(neighbours);
+    // console.log(neighbours);
     return neighbours;
 }
+
+function chooseOwner(neighbours){
+    if (neighbours.length <= 1){
+        return 0;
+    }else if (neighbours.length == 3 && current.player == 0){
+        return getHighestOwnerCount(neighbours);
+    } else if (neighbours.length <= 4){
+        return 0;
+    }
+}
+
+function getHighestOwnerCount(neighbours){
+    let p1 = 0, p2 =0;
+    for (let i = 0; i <= neighbours.length; i++){
+        if(neighbours[i].player == 1){
+            p1++;
+        }else if(neighbours[i].player == 2){
+            p2++;
+        }
+    }
+    return (p1 > p2) ? p1 : p2;
+}
+
+function gameLogic(gameState){
+    for (let x = 0; x < gameState.length; x++){
+        for (let y = 0; y < gameState[x].length; y++) {
+            let current = gameState[x][y];
+            // if (current === 'undefinied')
+            //     alert(x + ", ", y);
+            let neighbours = getNeighbours(gameState[x][y]);
+            let state = chooseOwner(neighbours);
+            if (state == 0){
+                current.status = "die";
+            }else {
+                current.player = state;
+                current.status = "born"
+            }
+        }
+    }
+
+    for (let x = 0; x < gameState.length; x++){
+        for (let y = 0; y < gameState[x].length; y++) {
+            let current = gameState[x][y];
+            if (current.status == "die"){
+                current.player = 0;
+            }
+            if (current.status == "born")
+                current.status = "alive";
+        }
+    }
+    drawDisplay(gameState);
+}
+
+
 
 
 gameState = initGameState();
 markCell();
-gameState[0][1] = 1;
-gameState[1][0] = 1;
+gameState[0][1].player = 1;
+gameState[1][0].player = 1;
+drawDisplay(gameState);
+gameLogic(gameState);
+drawDisplay(gameState);
 
-getNeighbours(1,1,gameState);
+// getNeighbours(0,0, gameState);
+function test(){
+    let btn = document.getElementById("test");
+    btn.addEventListener("click", gameLogicWrapper);
+}
+
+test();
+
+function gameLogicWrapper() {
+    gameLogic(gameState);
+}
