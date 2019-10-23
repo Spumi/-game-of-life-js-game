@@ -6,7 +6,7 @@
 
 {% block content %}
     <div class="d-flex justify-content-center">
-        <div id="game-board" class="mb-3" data-row-num="{{ row_num }}" data-col-num="{{ col_num }}">
+        <div id="game-board" class="mb-3 bg-light" data-row-num="{{ row_num }}" data-col-num="{{ col_num }}">
             {% for row in range(row_num) %}
                 <div>
                     {% for col in range(col_num) %}

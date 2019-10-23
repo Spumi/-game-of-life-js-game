@@ -2,28 +2,37 @@ body {
     padding: 150px 40px;
     font-family: 'Acme', sans-serif;
     color: black;
+    background-image: url("../images/background.png");
+    background-repeat: repeat;
+}
+
+#game-board {
+    box-shadow: 0 1px 5px rgba(0, 0, 0, .9);
+    padding: 10px;
+    border-radius: 4px;
 }
 
 .game-cell {
     cursor: pointer;
     border: 1px solid black;
     display: inline-block;
-    width: 30px;
-    height: 30px;
+    width: 60px;
+    height: 60px;
     font-size: 18px;
     text-align: center;
     margin: 1px 0px;
     color: grey;
     vertical-align: middle;
     box-shadow: 0 1px 5px rgba(0, 0, 0, .2);
+    border-radius: 1px;
 }
 
 .player1-cell {
-    background-color: blue;
+    background-color: #1976d2;
 }
 
 .player2-cell {
-    background-color: red;
+    background-color: #ff6347;
 }
 
 .empty-cell {
