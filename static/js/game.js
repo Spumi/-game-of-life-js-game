@@ -128,6 +128,8 @@ function markCell() {
                 gameState[markedCellCoordinateX][markedCellCoordinateY].player = currentPlayer;
                 console.log(gameState);
                 drawDisplay(gameState);
+
+                // a markCell fv-ben túl sok minden van bent, REFACTOR kell
                 if (previousRound < currentRound) {
                     // ROUND EVALUATION FUNCTION NEEDED BELOW
                     console.log('ROUND EVALUATION FUNCTION');
@@ -154,6 +156,8 @@ function countCells(player='Player1') {
     }
     return (player === 'Player1' ? countCellsPlayer1 : countCellsPlayer2);
 }
+
+
 function checkWinner(endOfLastRound=true) {
     let countCellsPlayer1 = countCells('Player1');
     let countCellsPlayer2 = countCells('Player2');
