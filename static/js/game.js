@@ -132,7 +132,8 @@ function markCell() {
                     // ROUND EVALUATION FUNCTION NEEDED BELOW
                     console.log('ROUND EVALUATION FUNCTION');
                     drawDisplay(gameState);
-                }
+                    checkWinner(false);
+                } // LAST ROUND CONDITION NEEDED with checkWinner(true) (ALSO IN THE IF CONDITION (not last round))
             }
         })
     }
@@ -143,3 +144,36 @@ let currentRound = 1;
 let click = 0;
 gameState = initGameState();
 markCell();
+
+function countCells(player='Player1') {
+    let countCellsPlayer1 = 0;
+    let countCellsPlayer2 = 0;
+    for (column of gameState) {
+        countCellsPlayer1 += column.filter(cell => cell.player === 1).length;
+        countCellsPlayer2 += column.filter((cell) => cell.player === 2).length;
+    }
+    return (player === 'Player1' ? countCellsPlayer1 : countCellsPlayer2);
+}
+function checkWinner(endOfLastRound=true) {
+    let countCellsPlayer1 = countCells('Player1');
+    let countCellsPlayer2 = countCells('Player2');
+    if (endOfLastRound) {
+        if (countCellsPlayer1 > countCellsPlayer2) {
+            alert('Player 1 won the game!');
+        } else if (countCellsPlayer1 < countCellsPlayer2) {
+            alert('Player 2 won the game!');
+        } else {
+            alert('It is a draw!');
+        }
+    }
+    else {
+        if (countCellsPlayer1 === 0) {
+            alert('Player 1 has no more cells. Player 2 won the game!');
+        } else if (countCellsPlayer2 === 0) {
+            alert('Player 2 has no more cells. Player 1 won the game!');
+        }
+    }
+    console.log(`Count cells Player1: ${countCellsPlayer1}`);
+    console.log(`Count cells Player2: ${countCellsPlayer2}`);
+}
+
