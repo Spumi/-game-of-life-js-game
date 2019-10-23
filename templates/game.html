@@ -5,15 +5,17 @@
 {% endblock %}
 
 {% block content %}
-    <div id="game-board" class="mb-3" data-row-num="{{ row_num }}" data-col-num="{{ col_num }}">
-        {% for row in range(row_num) %}
-            <div>
-                {% for col in range(col_num) %}
-                    <div class="game-cell empty-cell"
-                         data-coordinate-x="{{ col }}"
-                         data-coordinate-y="{{ row }}"></div>
-                {% endfor %}
-            </div>
-        {% endfor %}
+    <div class="d-flex justify-content-center">
+        <div id="game-board" class="mb-3" data-row-num="{{ row_num }}" data-col-num="{{ col_num }}">
+            {% for row in range(row_num) %}
+                <div>
+                    {% for col in range(col_num) %}
+                        <div class="game-cell empty-cell"
+                             data-coordinate-x="{{ col }}"
+                             data-coordinate-y="{{ row }}"></div>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        </div>
     </div>
 {% endblock %}
