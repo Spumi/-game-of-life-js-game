@@ -5,7 +5,15 @@
 {% endblock %}
 
 {% block content %}
+
     <div class="d-flex justify-content-center">
+        <nav class="navbar fixed-top navbar-dark">
+            <button id="retry-button" class="btn font-weight-bold" onclick="location.reload()">Restart game</button>
+            <div class="d-flex justify-content-center align-text-bottom">
+                <h1>Game of life</h1>
+            </div>
+            <a href="/" class="btn btn-outline-light font-weight-bold text-primary">Main menu</a>
+        </nav>
         <div id="game-board" class="mb-3 bg-light" data-row-num="{{ row_num }}" data-col-num="{{ col_num }}">
             {% for row in range(row_num) %}
                 <div>
