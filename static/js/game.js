@@ -112,8 +112,9 @@ function markCell() {
             console.log(`Coord-X: ${markedCellCoordinateX}`);
             console.log(`Coord-Y: ${markedCellCoordinateY}`);
 
-            if (gameState[markedCellCoordinateX][markedCellCoordinateY].player === 0 &&
-                validateClick(currentPlayer, gameState, markedCellCoordinateX, markedCellCoordinateY)) {
+            if (gameState[markedCellCoordinateX][markedCellCoordinateY].player === 0 //&&
+                //validateClick(currentPlayer, gameState, markedCellCoordinateX, markedCellCoordinateY)
+            ) {
                 click += 1;
                 console.log(`Click ${click}`);
 
@@ -141,15 +142,16 @@ function markCell() {
 
 
 function validateClick(player, gameState, coordinateX, coordinateY) {
-    let xMaxIndex = gameState.length - 1;
-    let yMaxIndex = gameState[0].length - 1;
-    for (let y = -2; y < 3; y++) {
-        for (let x = -2; x < 3; x++) {
+    const xMaxIndex = gameState.length - 1;
+    const yMaxIndex = gameState[0].length - 1;
+    const iteratorStartingVal = -2;
+    const iteratorOpenedEndPoint = 3;
+
+    for (let y = iteratorStartingVal; y < iteratorOpenedEndPoint; y++) {
+        for (let x = iteratorStartingVal; x < iteratorOpenedEndPoint; x++) {
             let xIndex = parseInt(coordinateX) + x;
             let yIndex = parseInt(coordinateY) + y;
-            if ((x === 0 && y === 0) || x < 0 || y < 0 || x > xMaxIndex || y > yMaxIndex) {
-                continue
-            } else {
+            if (((x === 0 && y === 0) || xIndex < 0 || yIndex < 0 || xIndex > xMaxIndex || yIndex > yMaxIndex) === false) {
                 if (player === gameState[xIndex][yIndex].player) {
                     return true
                 }
