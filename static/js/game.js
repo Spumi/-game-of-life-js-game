@@ -128,15 +128,15 @@ function markCell() {
                 console.log(gameState);
                 drawDisplay(gameState);
 
+                switchPlayer(click);
+                console.log(`Player: ${currentPlayer}`);
+
+
                 if (previousRound < currentRound) {
                     // ROUND EVALUATION FUNCTION NEEDED BELOW
                     console.log('ROUND EVALUATION FUNCTION');
                     drawDisplay(gameState);
                 }
-
-                switchPlayer(click);
-                console.log(`Player: ${currentPlayer}`);
-
             }
         })
     }
