@@ -39,7 +39,8 @@ function initGameState(){
     width = board.dataset.colNum;
     height = board.dataset.rowNum;
     maxRound = board.dataset.turnNum;
-    firstRoundMarkedCells = board.dataset.startCells;
+    firstRoundMarkedCellByOnePlayer = board.dataset.startCells;
+    firstRoundMarkedCells = firstRoundMarkedCellByOnePlayer * 2;
 
     let state = [width];
     for (let x = 0; x < width; x++) {
