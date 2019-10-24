@@ -31,13 +31,13 @@ function drawDisplay(object) {
             gameCellIndex += 1;
         }
     }
-
-    let turnDisplay = document.getElementById('turn-nr');
-    turnDisplay.innerHTML = 'ROUND: ' + String(currentRound);
-
-    return turnDisplay
 }
 
+function displayActualRound() {
+    let turnDisplay = document.getElementById('turn-nr');
+        turnDisplay.innerHTML = 'ROUND: ' + String(parseInt(currentRound) + 1);
+        return turnDisplay
+}
 
 function initGameState(){
     board = document.getElementById("game-board");
@@ -117,6 +117,7 @@ function markCell() {
                     setTimeout(function () {checkWinner(true)}, 0);
                 } else if (previousRound < currentRound) {
                     gameLogicWrapper(gameState);
+                    displayActualRound();
                     setTimeout(function () {checkWinner(false)}, 0);
                 }
             }
