@@ -1,7 +1,10 @@
 let gameState = [];
 let currentPlayer = 1;
 const alive = "alive";
-
+let maxRound = 5;
+let previousRound = 1;
+let currentRound = 1;
+let click = 0;
 
 class Cell {
     constructor(player, status) {
@@ -110,8 +113,6 @@ function markCell() {
             let markedCell = event.target;
             let markedCellCoordinateX = markedCell.dataset.coordinateX;
             let markedCellCoordinateY = markedCell.dataset.coordinateY;
-            gameState[markedCellCoordinateX][markedCellCoordinateY].player = currentPlayer;
-            gameState[markedCellCoordinateX][markedCellCoordinateY].status = alive;
             drawDisplay(gameState);
             console.log(`Coord-X: ${markedCellCoordinateX}`);
             console.log(`Coord-Y: ${markedCellCoordinateY}`);
@@ -129,6 +130,7 @@ function markCell() {
 
 
                 gameState[markedCellCoordinateX][markedCellCoordinateY].player = currentPlayer;
+                gameState[markedCellCoordinateX][markedCellCoordinateY].status = alive;
                 console.log(gameState);
                 drawDisplay(gameState);
 
@@ -138,6 +140,7 @@ function markCell() {
                 if (currentRound === maxRound && click % 2 === 0) {
                     setTimeout(function () {checkWinner(true)}, 0);
                 } else if (previousRound < currentRound) {
+                    gameLogicWrapper(gameState);
                     setTimeout(function () {checkWinner(false)}, 0);
                 }
             }
@@ -229,35 +232,8 @@ async function gameLogic(gameState){
         }
     }
 
-    // drawDisplay(gameState);
 }
 
-
-
-
-let maxRound = 2;
-let previousRound = 1;
-let currentRound = 1;
-let click = 0;
-gameState = initGameState();
-markCell();
-// gameState[0][1].player = 1;
-// gameState[0][1].status = "alive";
-// gameState[1][0].player = 1;
-// gameState[1][0].status = "alive";
-drawDisplay(gameState);
-// console.log(getNeighbours(0, 0, gameState));
-// gameLogic(gameState);
-// drawDisplay(gameState);
-
-// getNeighbours(0,0, gameState);
-// function test(){
-//     let btn = document.getElementById("test");
-//     btn.addEventListener("click", gameLogicWrapper);
-// }
-//
-// test();
-//
 function gameLogicWrapper() {
     gameLogic(gameState).then(drawDisplay(gameState));
 }
@@ -318,3 +294,6 @@ function checkWinner(endOfLastRound=true) {
     console.log(`Count cells Player2: ${countCellsPlayer2}`);
 }
 
+gameState = initGameState();
+markCell();
+drawDisplay(gameState);
