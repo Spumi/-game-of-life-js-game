@@ -38,6 +38,9 @@ function initGameState(){
     board = document.getElementById("game-board");
     width = board.dataset.colNum;
     height = board.dataset.rowNum;
+    maxRound = board.dataset.turnNum;
+    firstRoundMarkedCells = board.dataset.startCells;
+
     let state = [width];
     for (let x = 0; x < width; x++) {
         state[x] = new Array(height);
@@ -70,7 +73,6 @@ function initStartLocations(gameState){
 
 
 function switchPlayer(click) {
-    const firstRoundMarkedCellByOnePlayer = 4;
     let firstRoundMarkedCellByBothPlayer = firstRoundMarkedCellByOnePlayer * 2;
     if (click < firstRoundMarkedCellByOnePlayer) {
         currentPlayer = 1;
@@ -86,7 +88,6 @@ function markCell() {
     let gameCell = document.querySelectorAll('.game-cell');
     for (cell of gameCell) {
         cell.addEventListener('click', function (event) {
-            const firstRoundMarkedCells = 8;
             let markedCell = event.target;
             let markedCellCoordinateX = markedCell.dataset.coordinateX;
             let markedCellCoordinateY = markedCell.dataset.coordinateY;
@@ -262,6 +263,8 @@ let maxRound = 5;
 let previousRound = 1;
 let currentRound = 1;
 let click = 0;
+let firstRoundMarkedCellByOnePlayer = 4;
+let firstRoundMarkedCells = firstRoundMarkedCellByOnePlayer * 2;
 
 function main() {
 
