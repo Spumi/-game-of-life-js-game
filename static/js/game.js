@@ -107,7 +107,7 @@ function markCell() {
                 drawDisplay(gameState);
                 switchPlayer(click);
 
-                if (currentRound === maxRound && click % 2 === 0) {
+                if (currentRound == maxRound && click % 2 === 0) {
                     gameLogicWrapper(gameState);
                     setTimeout(function () {checkWinner(true)}, 0);
                 } else if (previousRound < currentRound) {
