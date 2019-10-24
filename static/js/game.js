@@ -142,7 +142,7 @@ function getHighestOwnerCount(neighbours){
     return (p1 > p2) ? 1 : 2;
 }
 
-function gameLogic(gameState){
+async function gameLogic(gameState){
     for (let x = 0; x < gameState.length; x++){
         for (let y = 0; y < gameState[x].length; y++) {
             let current = gameState[x][y];
@@ -180,7 +180,7 @@ function gameLogic(gameState){
         }
     }
 
-    drawDisplay(gameState);
+    // drawDisplay(gameState);
 }
 
 
@@ -204,6 +204,7 @@ function test(){
 test();
 
 function gameLogicWrapper() {
-    gameLogic(gameState);
-    // drawDisplay(gameState);
+    gameLogic(gameState).then(drawDisplay(gameState));
+
+
 }
