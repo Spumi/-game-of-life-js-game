@@ -2,6 +2,48 @@
 
 {% block content %}
 
-<h1>This is the place for the menu</h1>
-
+<div class="d-flex justify-content-center">
+    <h1>Game of life</h1>
+</div>
+<div id="menu">
+    <div class="d-flex justify-content-center mt-5">
+        <div id="menu-head" class="d-flex justify-content-center w-25 bg-light">
+            <h2 class="text-dark font-weight-bold">Main menu</h2>
+        </div>
+    </div>
+    <div class="d-flex justify-content-center">
+        <div id="menu-body" class="w-25 bg-light">
+            <form action="/game" method="get">
+                <div class="select d-flex justify-content-center w-100">
+                    <select class="custom-select" name="board-size">
+                        <option selected disabled>Select game board size</option>
+                        <option value="10">Small (10 x 20)</option>
+                        <option value="20">Medium (20 x 40)</option>
+                        <option value="40">Large (40 x 80)</option>
+                    </select>
+                </div>
+                <div class="select d-flex justify-content-center w-100">
+                    <select class="custom-select" name="turn-number">
+                        <option selected disabled>Select maximum turn number</option>
+                        <option value="5">Short (5 turns)</option>
+                        <option value="10">Medium (10 turns)</option>
+                        <option value="20">Long (20 turns)</option>
+                    </select>
+                </div>
+                <div class="select d-flex justify-content-center w-100">
+                    <select class="custom-select" name="starting-cells">
+                        <option selected disabled>Select number of starting cells</option>
+                        <option value="2">Minimum (1 + 2 cells / player)</option>
+                        <option value="4">Medium (1 + 4 cells / player)</option>
+                        <option value="9">Maximum (1 + 9 cells / player)</option>
+                    </select>
+                </div>
+                <div class="select d-flex justify-content-center w-100">
+                    <button class="btn btn-outline-dark mt-3" type="submit">Start game</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 {% endblock %}
+
