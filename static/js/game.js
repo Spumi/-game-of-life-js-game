@@ -138,6 +138,7 @@ function markCell() {
                 console.log(`Player: ${currentPlayer}`);
 
                 if (currentRound === maxRound && click % 2 === 0) {
+                    gameLogicWrapper(gameState);
                     setTimeout(function () {checkWinner(true)}, 0);
                 } else if (previousRound < currentRound) {
                     gameLogicWrapper(gameState);
