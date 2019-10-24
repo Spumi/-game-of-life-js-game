@@ -39,6 +39,25 @@ function displayActualRound() {
         return turnDisplay
 }
 
+
+function displayActualPlayer(player) {
+    let playerDisplays = document.getElementsByClassName('player-display');
+
+    if (parseInt(player) === 1) {
+        if (playerDisplays[0].classList.contains('hide-player')) {
+            playerDisplays[0].classList.remove('hide-player');
+            playerDisplays[1].classList.add('hide-player');
+        }
+    }
+    else if (parseInt(player) === 2) {
+        if (playerDisplays[1].classList.contains('hide-player')) {
+            playerDisplays[1].classList.remove('hide-player');
+            playerDisplays[0].classList.add('hide-player');
+        }
+    }
+    return playerDisplays
+}
+
 function initGameState(){
     board = document.getElementById("game-board");
     width = board.dataset.colNum;
@@ -111,6 +130,8 @@ function markCell() {
                 gameState[markedCellCoordinateX][markedCellCoordinateY].status = alive;
                 drawDisplay(gameState);
                 switchPlayer(click);
+                displayActualPlayer(currentPlayer);
+
 
                 if (currentRound == maxRound && click % 2 === 0) {
                     gameLogicWrapper(gameState);

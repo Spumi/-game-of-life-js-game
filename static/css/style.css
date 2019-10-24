@@ -86,5 +86,34 @@ h1 {
 }
 
 #turn-nr {
+    font-weight: bold;
+    font-size: 25px;
+}
 
+#player1-turn {
+    font-weight: bold;
+    font-size: 20px;
+    padding: 5px;
+    background-color: #2e5894;
+}
+
+#player2-turn {
+    font-weight: bold;
+    font-size: 20px;
+    padding: 5px;
+    background-color: #9c2542;
+}
+
+.hide-player {
+    visibility: hidden;
+}
+
+.blink_me {
+  animation: blinker 2s linear infinite;
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
 }
