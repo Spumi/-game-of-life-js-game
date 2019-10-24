@@ -134,9 +134,9 @@ function markCell() {
                 console.log(`Player: ${currentPlayer}`);
 
                 if (currentRound === maxRound && click % 2 === 0) {
-                    checkWinner(true);
+                    setTimeout(function () {checkWinner(true)}, 0);
                 } else if (previousRound < currentRound) {
-                    checkWinner(false);
+                    setTimeout(function () {checkWinner(false)}, 0);
                 }
             }
         })
@@ -144,7 +144,7 @@ function markCell() {
 }
 
 
-let maxRound = 3;
+let maxRound = 2;
 let previousRound = 1;
 let currentRound = 1;
 let click = 0;
