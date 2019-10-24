@@ -31,6 +31,11 @@ function drawDisplay(object) {
             gameCellIndex += 1;
         }
     }
+
+    let turnDisplay = document.getElementById('turn-nr');
+    turnDisplay.innerHTML = 'ROUND: ' + String(currentRound);
+
+    return turnDisplay
 }
 
 
