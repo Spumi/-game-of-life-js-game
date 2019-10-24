@@ -1,6 +1,7 @@
 let gameState = [];
 let currentPlayer = 1;
 
+
 class Cell {
     constructor(player, status) {
     this.player = player;
@@ -51,6 +52,7 @@ function initGameState(){
     drawDisplay(state);
     return state;
 }
+
 
 function initStartLocations(gameState){
     let p1X = Math.round(width / 4);
@@ -131,17 +133,23 @@ function markCell() {
                 switchPlayer(click);
                 console.log(`Player: ${currentPlayer}`);
 
-
-                if (previousRound < currentRound) {
-                    // ROUND EVALUATION FUNCTION NEEDED BELOW
-                    console.log('ROUND EVALUATION FUNCTION');
-                    drawDisplay(gameState);
+                if (currentRound === maxRound && click % 2 === 0) {
+                    checkWinner(true);
+                } else if (previousRound < currentRound) {
                     checkWinner(false);
-                } // LAST ROUND CONDITION NEEDED with checkWinner(true) (ALSO IN THE IF CONDITION (not last round))
+                }
             }
         })
     }
 }
+
+
+let maxRound = 3;
+let previousRound = 1;
+let currentRound = 1;
+let click = 0;
+gameState = initGameState();
+markCell();
 
 
 function validateClick(player, gameState, coordinateX, coordinateY) {
@@ -164,12 +172,6 @@ function validateClick(player, gameState, coordinateX, coordinateY) {
     return false
 }
 
-
-let previousRound = 1;
-let currentRound = 1;
-let click = 0;
-gameState = initGameState();
-markCell();
 
 function countCells(player='Player1') {
     let countCellsPlayer1 = 0;
