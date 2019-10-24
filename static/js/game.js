@@ -1,10 +1,4 @@
-let gameState = [];
-let currentPlayer = 1;
-const alive = "alive";
-let maxRound = 5;
-let previousRound = 1;
-let currentRound = 1;
-let click = 0;
+
 
 class Cell {
     constructor(player, status) {
@@ -71,25 +65,8 @@ function initStartLocations(gameState){
          for (let x = 0; x < width; x++) {
             str += gameState[x][y].player + ", ";
          }
-         // console.log("|" + str + y.toString())
      }
 }
-
-//
-// function getNeighbourCount(x, y, gameState) {
-//     let neighbourCount = 0;
-//     for (let xOffset = -1; xOffset <= 1; xOffset++) {
-//         for (let yOffset = -1; yOffset <= 1; yOffset++) {
-//             if (xOffset != 0 &&
-//                 yOffset != 0 &&
-//                 gameState[x + xOffset][y + yOffset] &&
-//                 gameState[x + xOffset][y + yOffset] != 0) {
-//                 neighbourCount++;
-//             }
-//         }
-//     }
-//     return neighbourCount;
-// }
 
 
 function switchPlayer(click) {
@@ -114,28 +91,19 @@ function markCell() {
             let markedCellCoordinateX = markedCell.dataset.coordinateX;
             let markedCellCoordinateY = markedCell.dataset.coordinateY;
             drawDisplay(gameState);
-            console.log(`Coord-X: ${markedCellCoordinateX}`);
-            console.log(`Coord-Y: ${markedCellCoordinateY}`);
 
             if (gameState[markedCellCoordinateX][markedCellCoordinateY].player === 0 &&
                 validateClick(currentPlayer, gameState, markedCellCoordinateX, markedCellCoordinateY)
             ) {
                 click += 1;
-                console.log(`Click ${click}`);
 
                 currentRound = (click <= firstRoundMarkedCells ? 1 : (click % 2 === 0 ? currentRound : currentRound + 1));
                 previousRound = (click < firstRoundMarkedCells ? 1 : (click % 2 === 0 ? currentRound - 1 : currentRound));
-                console.log(`Previous round: ${previousRound}`);
-                console.log(`Current round ${currentRound}`);
-
 
                 gameState[markedCellCoordinateX][markedCellCoordinateY].player = currentPlayer;
                 gameState[markedCellCoordinateX][markedCellCoordinateY].status = alive;
-                console.log(gameState);
                 drawDisplay(gameState);
-
                 switchPlayer(click);
-                console.log(`Player: ${currentPlayer}`);
 
                 if (currentRound === maxRound && click % 2 === 0) {
                     gameLogicWrapper(gameState);
@@ -154,7 +122,6 @@ function getNeighbours(x, y, gameState) {
     let offset = -1;
     for (let xOffset = 0; xOffset < 3; xOffset++) {
         for (let yOffset = 0; yOffset < 3; yOffset++) {
-            console.log("x: " + x + " y:" + y + " xo: " + (xOffset + offset + x) + " yo: " + (yOffset + offset + y) );
             if (xOffset + offset + x >= 0 &&
                 yOffset + offset + y >= 0 &&
                 !(xOffset + offset == 0 && yOffset + offset == 0) &&
@@ -162,18 +129,17 @@ function getNeighbours(x, y, gameState) {
                 gameState[x + xOffset -1][y + yOffset - 1] != undefined)
             {
                 if (gameState[x + xOffset -1][y + yOffset - 1].player > 0 &&
-                    gameState[x + xOffset -1][y + yOffset - 1].status != "born")
-                    neighbours.push(gameState[x + xOffset - 1] [y + yOffset -1 ]);
-                console.log(gameState[x + xOffset - 1] [y + yOffset -1 ]);
+                    gameState[x + xOffset -1][y + yOffset - 1].status != "born"
+                ) {
+                      neighbours.push(gameState[x + xOffset - 1] [y + yOffset - 1]);
+                }
             }
         }
     }
-     console.log("----------------");
     return neighbours;
 }
 
 function chooseOwner(neighbours){
-    // console.log(neighbours.length);
     if (neighbours.length <= 1){
         return -1;
     }else if (neighbours.length == 3){
@@ -201,8 +167,6 @@ async function gameLogic(gameState){
     for (let x = 0; x < gameState.length; x++){
         for (let y = 0; y < gameState[x].length; y++) {
             let current = gameState[x][y];
-            // if (current === 'undefinied')
-            //     alert(x + ", ", y);
             let neighbours = getNeighbours(x,y,gameState);
             let state = chooseOwner(neighbours);
             if (state == -1){
@@ -210,11 +174,9 @@ async function gameLogic(gameState){
             }else if (state > 0 && current.status != 'alive'){
                 current.player = state;
                 current.status = "born"
-                // console.log(state)
             }
         }
     }
-    // console.log(gameState);
     for (let x = 0; x < gameState.length; x++){
         for (let y = 0; y < gameState[x].length; y++) {
             let current = gameState[x][y];
@@ -291,10 +253,21 @@ function checkWinner(endOfLastRound=true) {
             alert('Player 2 has no more cells. Player 1 won the game!');
         }
     }
-    console.log(`Count cells Player1: ${countCellsPlayer1}`);
-    console.log(`Count cells Player2: ${countCellsPlayer2}`);
 }
 
-gameState = initGameState();
-markCell();
-drawDisplay(gameState);
+let gameState = [];
+let currentPlayer = 1;
+const alive = "alive";
+let maxRound = 5;
+let previousRound = 1;
+let currentRound = 1;
+let click = 0;
+
+function main() {
+
+    gameState = initGameState();
+    markCell();
+    drawDisplay(gameState);
+}
+
+main();
