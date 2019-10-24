@@ -1,5 +1,6 @@
 let gameState = [];
 let currentPlayer = 1;
+const alive = "alive";
 
 class Cell {
     constructor(player, status) {
@@ -69,21 +70,21 @@ function initStartLocations(gameState){
      }
 }
 
-
-function getNeighbourCount(x, y, gameState) {
-    let neighbourCount = 0;
-    for (let xOffset = -1; xOffset <= 1; xOffset++) {
-        for (let yOffset = -1; yOffset <= 1; yOffset++) {
-            if (xOffset != 0 &&
-                yOffset != 0 &&
-                gameState[x + xOffset][y + yOffset] &&
-                gameState[x + xOffset][y + yOffset] != 0) {
-                neighbourCount++;
-            }
-        }
-    }
-    return neighbourCount;
-}
+//
+// function getNeighbourCount(x, y, gameState) {
+//     let neighbourCount = 0;
+//     for (let xOffset = -1; xOffset <= 1; xOffset++) {
+//         for (let yOffset = -1; yOffset <= 1; yOffset++) {
+//             if (xOffset != 0 &&
+//                 yOffset != 0 &&
+//                 gameState[x + xOffset][y + yOffset] &&
+//                 gameState[x + xOffset][y + yOffset] != 0) {
+//                 neighbourCount++;
+//             }
+//         }
+//     }
+//     return neighbourCount;
+// }
 
 
 function markCell() {
@@ -94,6 +95,7 @@ function markCell() {
             let markedCellCoordinateX = markedCell.dataset.coordinateX;
             let markedCellCoordinateY = markedCell.dataset.coordinateY;
             gameState[markedCellCoordinateX][markedCellCoordinateY].player = currentPlayer;
+            gameState[markedCellCoordinateX][markedCellCoordinateY].status = alive;
             drawDisplay(gameState);
         })
     }
@@ -104,17 +106,21 @@ function getNeighbours(x, y, gameState) {
     let offset = -1;
     for (let xOffset = 0; xOffset < 3; xOffset++) {
         for (let yOffset = 0; yOffset < 3; yOffset++) {
+            console.log("x: " + x + " y:" + y + " xo: " + (xOffset + offset + x) + " yo: " + (yOffset + offset + y) );
             if (xOffset + offset + x >= 0 &&
                 yOffset + offset + y >= 0 &&
-                !(xOffset + offset == x && yOffset + offset == y) &&
-                gameState[x + xOffset -1][y + yOffset - 1])
+                !(xOffset + offset == 0 && yOffset + offset == 0) &&
+                gameState[x + xOffset -1] != undefined &&
+                gameState[x + xOffset -1][y + yOffset - 1] != undefined)
             {
-                if (gameState[x + xOffset -1][y + yOffset - 1].player != 0)
+                if (gameState[x + xOffset -1][y + yOffset - 1].player > 0 &&
+                    gameState[x + xOffset -1][y + yOffset - 1].status != "born")
                     neighbours.push(gameState[x + xOffset - 1] [y + yOffset -1 ]);
+                console.log(gameState[x + xOffset - 1] [y + yOffset -1 ]);
             }
         }
     }
-    // console.log(neighbours);
+     console.log("----------------");
     return neighbours;
 }
 
@@ -126,8 +132,8 @@ function chooseOwner(neighbours){
         return getHighestOwnerCount(neighbours);
     } else if (neighbours.length >= 4){
         return -1;
-    }
-    else return 0;
+    }else
+        return 0;
 }
 
 function getHighestOwnerCount(neighbours){
@@ -143,6 +149,7 @@ function getHighestOwnerCount(neighbours){
 }
 
 async function gameLogic(gameState){
+
     for (let x = 0; x < gameState.length; x++){
         for (let y = 0; y < gameState[x].length; y++) {
             let current = gameState[x][y];
@@ -152,7 +159,7 @@ async function gameLogic(gameState){
             let state = chooseOwner(neighbours);
             if (state == -1){
                 current.status = "die";
-            }else if (state > 0){
+            }else if (state > 0 && current.status != 'alive'){
                 current.player = state;
                 current.status = "born"
                 // console.log(state)
@@ -167,16 +174,14 @@ async function gameLogic(gameState){
                 current.player = 0;
                 current.status = "none"
             }
-
         }
     }
 
-
-    for (let x = 0; x < gameState.length; x++) {
+       for (let x = 0; x < gameState.length; x++) {
         for (let y = 0; y < gameState[x].length; y++) {
             let current = gameState[x][y];
-               if (current.status == "born")
-                   current.status = "alive";
+            if (current.status == "born")
+                current.status = "alive";
         }
     }
 
@@ -188,21 +193,23 @@ async function gameLogic(gameState){
 
 gameState = initGameState();
 markCell();
-gameState[0][1].player = 1;
-gameState[1][0].player = 1;
+// gameState[0][1].player = 1;
+// gameState[0][1].status = "alive";
+// gameState[1][0].player = 1;
+// gameState[1][0].status = "alive";
 drawDisplay(gameState);
 // console.log(getNeighbours(0, 0, gameState));
 // gameLogic(gameState);
 // drawDisplay(gameState);
 
 // getNeighbours(0,0, gameState);
-function test(){
-    let btn = document.getElementById("test");
-    btn.addEventListener("click", gameLogicWrapper);
-}
-
-test();
-
+// function test(){
+//     let btn = document.getElementById("test");
+//     btn.addEventListener("click", gameLogicWrapper);
+// }
+//
+// test();
+//
 function gameLogicWrapper() {
     gameLogic(gameState).then(drawDisplay(gameState));
 
