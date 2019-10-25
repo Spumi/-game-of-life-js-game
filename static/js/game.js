@@ -33,9 +33,9 @@ function drawDisplay(object) {
     }
 }
 
-function displayActualRound() {
+function displayActualRound(round) {
     let turnDisplay = document.getElementById('turn-nr');
-        turnDisplay.innerHTML = 'ROUND: ' + String(parseInt(currentRound) + 1);
+        turnDisplay.innerHTML = 'ROUND: ' + String(parseInt(round) + 1);
         return turnDisplay
 }
 
@@ -135,11 +135,11 @@ function markCell() {
 
                 if (currentRound == maxRound && click % 2 === 0) {
                     gameLogicWrapper(gameState);
-                    setTimeout(function () {checkWinner(true)}, 0);
+                    setTimeout(function () {checkWinner(true)}, 100);
                 } else if (previousRound < currentRound) {
                     gameLogicWrapper(gameState);
-                    displayActualRound();
-                    setTimeout(function () {checkWinner(false)}, 0);
+                    displayActualRound(currentRound);
+                    setTimeout(function () {checkWinner(false)}, 100);
                 }
             }
         })
